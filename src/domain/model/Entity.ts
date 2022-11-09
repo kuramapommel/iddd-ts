@@ -7,8 +7,10 @@ export default abstract class Entity<ID extends Identity> implements IdentifiedD
     abstract id: ID
 
     equals(object: any): boolean {
-        if (!object || object instanceof Entity<ID> || object.type != this.type) return false
-
+        // interface は instanceof による型チェックができないので、 Entity 型を implements しているかをユーザ定義タイプガードを用いてチェックする
+        const isEntityType = (entity: any): entity is Entity<ID> => typeof entity === "object" && typeof entity.type === "string" && ((id: any): id is Identity => typeof id === "object" && typeof id.value === "string")(entity.id)
+        if (!object || !isEntityType(object) || object.type != this.type) return false
+        
         return this.id.value === object.id.value
     }
 }

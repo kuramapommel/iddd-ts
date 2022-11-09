@@ -5,12 +5,13 @@ class DomainEventPublisher {
     readonly subscribers = [] as DomainEventSubscriber[]
 
     // todo スレッドセーフ考慮する必要ある？
+    // todo シングルトンにせずプロセスに合わせてインスタンス化して引き回すほうが良さそう、言語の限界かな、、、
     publish (domainEvent: DomainEvent): void {
         // サブスクライバが登録されていないのであれば処理する必要がない
         if (this.subscribers.length <= 0) return
         
         this.subscribers.forEach(subscriber => {
-            if (subscriber.subscribedToType != domainEvent.type && subscriber.subscribedToType != "event") return
+            if (subscriber.subscribedToType != domainEvent.type && domainEvent.type != "event") return
 
             subscriber.handleEvent(domainEvent)
         })
