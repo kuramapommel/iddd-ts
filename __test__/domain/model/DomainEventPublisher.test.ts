@@ -1,4 +1,4 @@
-import instance from "../../../src/domain/model/DomainEventPublisher"
+import DomainEventPublisher from "../../../src/domain/model/DomainEventPublisher"
 import DomainEvent from "../../../src/domain/model/DomainEvent"
 
 describe("DomainEventPublisher.publish",() => {
@@ -6,7 +6,7 @@ describe("DomainEventPublisher.publish",() => {
     test("type が event のときはサブスクライブする",() => {
         let result = false
 
-        const publisher = instance()
+        const publisher = new DomainEventPublisher()
         publisher.reset()
 
         publisher.subscribe({
@@ -28,7 +28,7 @@ describe("DomainEventPublisher.publish",() => {
         const eventName = "same"
         let result = false
 
-        const publisher = instance()
+        const publisher = new DomainEventPublisher()
         publisher.reset()
         
         publisher.subscribe({
@@ -49,7 +49,7 @@ describe("DomainEventPublisher.publish",() => {
     test("type が subscriber.subscribedToType と一致しないときはサブスクライブしない",() => {
         let result = false
 
-        const publisher = instance()
+        const publisher = new DomainEventPublisher()
         publisher.reset()
 
         publisher.subscribe({
@@ -70,7 +70,7 @@ describe("DomainEventPublisher.publish",() => {
     test("サブスクライバが登録されていないときはサブスクライブしない",() => {
         let result = false
 
-        const publisher = instance()
+        const publisher = new DomainEventPublisher()
         publisher.reset()
 
         publisher.publish({
@@ -87,7 +87,7 @@ describe("DomainEventPublisher.reset",() => {
     test("サブスクライバが reset されたときはサブスクライブしない",() => {
         let result = false
 
-        const publisher = instance()
+        const publisher = new DomainEventPublisher()
         publisher.reset()
 
         publisher.subscribe({

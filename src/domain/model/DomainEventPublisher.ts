@@ -1,7 +1,7 @@
 import DomainEvent from "./DomainEvent"
 import DomainEventSubscriber from "./DomainEventSubscriber"
 
-class DomainEventPublisher {
+export default class DomainEventPublisher {
     readonly subscribers = [] as DomainEventSubscriber[]
 
     // todo スレッドセーフ考慮する必要ある？
@@ -29,8 +29,3 @@ class DomainEventPublisher {
         this.subscribers.push(subscriber)
     }
 }
-
-const domainEventPublisher = new DomainEventPublisher()
-
-const instance = () => domainEventPublisher
-export default instance
